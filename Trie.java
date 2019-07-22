@@ -74,7 +74,41 @@ public class Trie {
 
         return trieNode.getValue();
     }
+    
+    
+    public List<String> allWordsWithPrefix(String prefix){
 
+        Node trieNode = root;
+        List<String> lalagyan = new ArrayList<>();
+
+        for (int i = 0; i < prefix.length(); i++) {
+            
+            char c = prefix.charAt(i);
+            int ascii = c - 'a';
+            trieNode = trieNode.getChild(ascii);
+        }
+
+        collect(trieNode, prefix, lalagyan);
+
+        return lalagyan;
+    }
+
+
+    private void collect(Node node, String prefix, List<String> lalagyan){
+
+        if(node == null) return;
+
+        if(node.isLeaf()){
+            lalagyan.add(prefix);
+        }
+        
+        for (Node childNode : node.getChildren()) {
+            if(childNode == null ) continue; // skip
+            String childChar = childNode.getCharacter();
+            collect(childNode, prefix + childChar, lalagyan);
+        }
+
+    }
 
 
 }
